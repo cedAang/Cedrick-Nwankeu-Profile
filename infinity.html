@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Infinity · blackhole motif</title>
+<style>
+  :root{ --bg:#050506; --orange:#b56a38; --sky:#8fb0d4; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);min-height:100vh;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* atmospheric starfield, shared with the portfolio */
+  .stars,.stars2{position:fixed;inset:0;z-index:0;pointer-events:none}
+  .stars{background-image:
+    radial-gradient(1px 1px at 20% 30%,#fff,transparent),
+    radial-gradient(1px 1px at 75% 12%,rgba(255,255,255,.7),transparent),
+    radial-gradient(1px 1px at 40% 80%,rgba(255,255,255,.6),transparent),
+    radial-gradient(1.5px 1.5px at 88% 60%,#fff,transparent),
+    radial-gradient(1px 1px at 12% 65%,rgba(255,255,255,.5),transparent),
+    radial-gradient(1px 1px at 60% 45%,rgba(255,255,255,.55),transparent),
+    radial-gradient(1px 1px at 92% 88%,rgba(255,255,255,.6),transparent),
+    radial-gradient(1px 1px at 33% 18%,rgba(255,255,255,.5),transparent);
+    background-repeat:repeat;background-size:520px 520px;opacity:.5;
+    animation:drift 240s linear infinite;}
+  .stars2{background-image:
+    radial-gradient(1px 1px at 50% 50%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1px 1px at 15% 22%,rgba(255,255,255,.35),transparent),
+    radial-gradient(1px 1px at 70% 70%,rgba(255,255,255,.4),transparent);
+    background-repeat:repeat;background-size:340px 340px;opacity:.35;
+    animation:drift 160s linear infinite reverse;}
+  @keyframes drift{from{transform:translateY(0)}to{transform:translateY(-520px)}}
+
+  /* the infinity, sized like the blackhole footprint */
+  .infinity{position:relative;z-index:1;width:min(760px,94vw);
+    animation:float 9s ease-in-out infinite alternate}
+  .infinity svg{display:block;width:100%;height:auto;overflow:visible}
+  @keyframes float{from{transform:translateY(-10px)}to{transform:translateY(10px)}}
+
+  /* accretion-disk layers, recreated as stacked strokes of one curve */
+  .loop{fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .halo-warm{stroke:var(--orange);stroke-width:46;opacity:.18;filter:url(#blurHuge);
+       animation:breatheWarm 6.5s ease-in-out infinite}
+  .halo-cool{stroke:var(--sky);stroke-width:40;opacity:.20;filter:url(#blurHuge);
+       animation:breatheCool 6.5s ease-in-out infinite}
+  .glow-warm{stroke:var(--orange);stroke-width:28;opacity:.34;filter:url(#blurBig)}
+  .glow-cool{stroke:var(--sky);stroke-width:17;opacity:.46;filter:url(#blurMid)}
+  .filament{stroke:url(#disk);stroke-width:7;opacity:.95;filter:url(#blurSm)}
+  .core{stroke:#fff;stroke-width:2.2;opacity:.55;filter:url(#blurSm)}
+  .spark-a{stroke:#fff;stroke-width:2.6;opacity:.95;
+       stroke-dasharray:5 41;animation:flow 6.5s linear infinite}
+  .spark-b{stroke:var(--sky);stroke-width:3.6;opacity:.85;filter:url(#blurSm);
+       stroke-dasharray:2 124;animation:flow2 5s linear infinite}
+  .spark-c{stroke:#ffe6cf;stroke-width:2.2;opacity:.8;filter:url(#blurSm);
+       stroke-dasharray:2 180;animation:flow3 8s linear infinite}
+
+  @keyframes flow{to{stroke-dashoffset:-460}}    /* 10 * (5+41)   */
+  @keyframes flow2{to{stroke-dashoffset:-504}}    /* 4  * (2+124)  */
+  @keyframes flow3{to{stroke-dashoffset:546}}     /* 3  * (2+180), reversed */
+  @keyframes breatheWarm{0%,100%{opacity:.14}50%{opacity:.26}}
+  @keyframes breatheCool{0%,100%{opacity:.24}50%{opacity:.14}}
+  @keyframes pulse{0%,100%{opacity:.55;transform:scale(.9)}50%{opacity:1;transform:scale(1.12)}}
+
+  .flare{transform-box:fill-box;transform-origin:center;
+    animation:pulse 4.2s ease-in-out infinite}
+  .tip-cool{transform-box:fill-box;transform-origin:center;
+    animation:pulse 5.5s ease-in-out infinite}
+  .tip-warm{transform-box:fill-box;transform-origin:center;
+    animation:pulse 5.5s ease-in-out infinite .8s}
+
+  @media(prefers-reduced-motion:reduce){ *{animation:none!important} }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="stars2"></div>
+
+<div class="infinity" aria-label="infinity" role="img">
+  <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <linearGradient id="disk" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0"   stop-color="#8fb0d4"/>
+        <stop offset=".40" stop-color="#dfeaf5"/>
+        <stop offset=".5"  stop-color="#ffffff"/>
+        <stop offset=".60" stop-color="#f0d8c5"/>
+        <stop offset="1"   stop-color="#b56a38"/>
+      </linearGradient>
+      <radialGradient id="flareGrad">
+        <stop offset="0" stop-color="#ffffff" stop-opacity="1"/>
+        <stop offset=".4" stop-color="#ffe9d6" stop-opacity=".7"/>
+        <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="coolGrad">
+        <stop offset="0" stop-color="#cfe2f5" stop-opacity=".95"/>
+        <stop offset="1" stop-color="#8fb0d4" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="warmGrad">
+        <stop offset="0" stop-color="#ffd0a3" stop-opacity=".95"/>
+        <stop offset="1" stop-color="#b56a38" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="ambient">
+        <stop offset="0" stop-color="#7d8db0" stop-opacity=".22"/>
+        <stop offset="1" stop-color="#7d8db0" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="blurHuge" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="14"/></filter>
+      <filter id="blurBig"  x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+      <filter id="blurMid"  x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4.5"/></filter>
+      <filter id="blurSm"   x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.4"/></filter>
+      <filter id="flareBlur" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3"/></filter>
+    </defs>
+
+    <!-- soft ambient bloom behind the whole symbol -->
+    <ellipse cx="200" cy="100" rx="210" ry="120" fill="url(#ambient)"/>
+
+    <!-- stacked strokes of the same lemniscate path, injected by script -->
+    <path class="loop halo-warm"></path>
+    <path class="loop halo-cool"></path>
+    <path class="loop glow-warm"></path>
+    <path class="loop glow-cool"></path>
+    <path class="loop filament"></path>
+    <path class="loop core"></path>
+    <path class="loop spark-c"></path>
+    <path class="loop spark-b"></path>
+    <path class="loop spark-a"></path>
+
+    <!-- glints: blue + orange loop tips, white-hot center crossing -->
+    <circle class="tip-cool" cx="34"  cy="100" r="11" fill="url(#coolGrad)" filter="url(#flareBlur)"/>
+    <circle class="tip-warm" cx="366" cy="100" r="11" fill="url(#warmGrad)" filter="url(#flareBlur)"/>
+    <circle class="flare"    cx="200" cy="100" r="16" fill="url(#flareGrad)" filter="url(#flareBlur)"/>
+  </svg>
+</div>
+
+<script>
+  // Lemniscate of Bernoulli: the true infinity curve, sampled into an SVG path.
+  (function(){
+    const cx = 200, cy = 100, a = 166, N = 240;
+    let d = "";
+    for(let i=0;i<=N;i++){
+      const t = (i/N) * Math.PI * 2;
+      const denom = 1 + Math.sin(t)*Math.sin(t);
+      const x = cx + (a * Math.cos(t)) / denom;
+      const y = cy + (a * Math.sin(t) * Math.cos(t)) / denom;
+      d += (i===0 ? "M" : "L") + x.toFixed(2) + " " + y.toFixed(2) + " ";
+    }
+    d += "Z";
+    document.querySelectorAll(".loop").forEach(p => p.setAttribute("d", d));
+  })();
+</script>
+</body>
+</html>

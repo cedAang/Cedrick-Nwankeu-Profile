@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cedrick Nwankeu · Senior Salesforce Developer Consultant</title>
+<meta name="description" content="Cedrick Nwankeu, Senior Salesforce Developer Consultant. Ten years shipping Agentforce, Experience Cloud, LWC, and integrations that cut cost and case load." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#050506;
+    --bg-soft:#0a0a0d;
+    --panel:rgba(255,255,255,.035);
+    --panel-2:rgba(255,255,255,.06);
+    --line:rgba(255,255,255,.09);
+    --line-strong:rgba(255,255,255,.16);
+    --text:#f5f5f7;
+    --muted:#9b9ba6;
+    --muted-2:#6e6e79;
+    --orange:#b56a38;
+    --orange-soft:#cc8a52;
+    --ember:#b56a38;
+    --ice:#a8cbeb;
+    --ice-2:#8fb0d4;
+    --sky:#8fb0d4;
+    --ok:#7fd1a6;
+    --display:"Schibsted Grotesk",sans-serif;
+    --body:"Hanken Grotesk",sans-serif;
+    --mono:"Space Mono",monospace;
+    --maxw:1180px;
+    --nav-bg:rgba(8,8,11,.82);
+    --nav-bg-scrolled:rgba(6,6,9,.92);
+    --nav-line:rgba(255,255,255,.16);
+    --nav-line-scrolled:rgba(255,255,255,.2);
+    --btn-fill:#15161c;
+  }
+  /* ---------- LIGHT THEME ---------- */
+  html[data-theme="light"]{
+    --bg:#eef1f6;
+    --bg-soft:#ffffff;
+    --panel:rgba(12,16,28,.04);
+    --panel-2:rgba(12,16,28,.07);
+    --line:rgba(12,16,28,.10);
+    --line-strong:rgba(12,16,28,.18);
+    --text:#15161c;
+    --muted:#55586a;
+    --muted-2:#80869a;
+    --ice:#3f6f9e;
+    --ice-2:#5d86b0;
+    --nav-bg:rgba(255,255,255,.78);
+    --nav-bg-scrolled:rgba(255,255,255,.92);
+    --nav-line:rgba(12,16,28,.12);
+    --nav-line-scrolled:rgba(12,16,28,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--body);
+    background:
+      radial-gradient(140% 120% at 50% -20%,#0a0e18 0%,transparent 55%),
+      radial-gradient(120% 100% at 85% 8%,#140c0a 0%,transparent 50%),
+      radial-gradient(110% 100% at 8% 92%,#080f1a 0%,transparent 55%),
+      var(--bg);
+    background-attachment:fixed;
+    color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    transition:color .4s ease;
+  }
+  html[data-theme="light"] body{
+    background:
+      radial-gradient(140% 120% at 50% -20%,#e7eef9 0%,transparent 55%),
+      radial-gradient(120% 100% at 85% 8%,#f7efe8 0%,transparent 50%),
+      radial-gradient(110% 100% at 8% 92%,#e7f0f8 0%,transparent 55%),
+      var(--bg);
+  }
+  ::selection{background:rgba(143,176,212,.45);color:#fff}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* ---------- space background ---------- */
+  .stars,.stars2,.stars3{position:fixed;inset:0;z-index:-3;pointer-events:none;transition:opacity .5s ease}
+  .stars{background-image:
+    radial-gradient(1px 1px at 20% 30%,#fff,transparent),
+    radial-gradient(1px 1px at 75% 12%,rgba(255,255,255,.7),transparent),
+    radial-gradient(1px 1px at 40% 80%,rgba(255,255,255,.6),transparent),
+    radial-gradient(1.5px 1.5px at 88% 60%,#fff,transparent),
+    radial-gradient(1px 1px at 12% 65%,rgba(255,255,255,.5),transparent),
+    radial-gradient(1px 1px at 60% 45%,rgba(255,255,255,.55),transparent),
+    radial-gradient(1px 1px at 92% 88%,rgba(255,255,255,.6),transparent),
+    radial-gradient(1px 1px at 33% 18%,rgba(255,255,255,.5),transparent);
+    background-repeat:repeat;background-size:520px 520px;opacity:.5;animation:drift 240s linear infinite;}
+  .stars2{background-image:
+    radial-gradient(1px 1px at 50% 50%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1px 1px at 15% 22%,rgba(255,255,255,.35),transparent),
+    radial-gradient(1px 1px at 70% 70%,rgba(255,255,255,.4),transparent);
+    background-repeat:repeat;background-size:340px 340px;opacity:.35;animation:drift 160s linear infinite reverse;}
+  .stars3{background-image:
+    radial-gradient(2px 2px at 22% 34%,#fff,transparent),
+    radial-gradient(2.5px 2.5px at 78% 18%,rgba(207,226,245,.95),transparent),
+    radial-gradient(2px 2px at 54% 72%,#fff,transparent),
+    radial-gradient(2.5px 2.5px at 14% 82%,rgba(255,224,207,.9),transparent),
+    radial-gradient(2px 2px at 90% 64%,#fff,transparent),
+    radial-gradient(2px 2px at 40% 12%,rgba(207,226,245,.85),transparent);
+    background-repeat:repeat;background-size:700px 700px;opacity:.75;
+    animation:drift 320s linear infinite,twinkle 7s ease-in-out infinite;}
+  /* light mode keeps a real starfield: dark/blue specks that read on white */
+  html[data-theme="light"] .stars{opacity:.55;background-image:
+    radial-gradient(1px 1px at 20% 30%,rgba(40,52,84,.85),transparent),
+    radial-gradient(1px 1px at 75% 12%,rgba(40,52,84,.55),transparent),
+    radial-gradient(1px 1px at 40% 80%,rgba(40,52,84,.5),transparent),
+    radial-gradient(1.5px 1.5px at 88% 60%,rgba(40,52,84,.85),transparent),
+    radial-gradient(1px 1px at 12% 65%,rgba(40,52,84,.45),transparent),
+    radial-gradient(1px 1px at 60% 45%,rgba(40,52,84,.5),transparent),
+    radial-gradient(1px 1px at 92% 88%,rgba(40,52,84,.5),transparent),
+    radial-gradient(1px 1px at 33% 18%,rgba(40,52,84,.45),transparent);}
+  html[data-theme="light"] .stars2{opacity:.4;background-image:
+    radial-gradient(1px 1px at 50% 50%,rgba(40,52,84,.45),transparent),
+    radial-gradient(1px 1px at 15% 22%,rgba(40,52,84,.4),transparent),
+    radial-gradient(1px 1px at 70% 70%,rgba(40,52,84,.45),transparent);}
+  html[data-theme="light"] .stars3{opacity:.5;background-image:
+    radial-gradient(2px 2px at 22% 34%,rgba(63,111,158,.8),transparent),
+    radial-gradient(2.5px 2.5px at 78% 18%,rgba(40,52,84,.6),transparent),
+    radial-gradient(2px 2px at 54% 72%,rgba(63,111,158,.75),transparent),
+    radial-gradient(2.5px 2.5px at 14% 82%,rgba(181,106,56,.6),transparent),
+    radial-gradient(2px 2px at 90% 64%,rgba(40,52,84,.6),transparent),
+    radial-gradient(2px 2px at 40% 12%,rgba(63,111,158,.6),transparent);}
+  html[data-theme="light"] body::before{background:
+    radial-gradient(48% 40% at 18% 20%,rgba(63,111,158,.24),transparent 60%),
+    radial-gradient(44% 38% at 82% 26%,rgba(181,106,56,.20),transparent 60%),
+    radial-gradient(56% 48% at 72% 76%,rgba(63,111,158,.18),transparent 62%),
+    radial-gradient(42% 36% at 28% 82%,rgba(181,106,56,.15),transparent 60%),
+    radial-gradient(120% 90% at 50% -12%,rgba(90,120,180,.12),transparent 60%);}
+  /* light-theme blackhole: luminous core so dark hero text reads, ring recoloured to show on white */
+  html[data-theme="light"] .blackhole .core{
+    background:radial-gradient(closest-side,#ffffff 50%,#e9eef7 57%,transparent 62%);
+    box-shadow:0 0 120px 30px rgba(181,106,56,.16) inset,0 0 60px 12px rgba(63,111,158,.12);
+  }
+  html[data-theme="light"] .blackhole .ring{
+    background:conic-gradient(from 210deg,
+      rgba(255,255,255,0) 0deg,rgba(63,111,158,.5) 40deg,rgba(63,111,158,.85) 110deg,
+      rgba(47,111,174,.95) 155deg,rgba(181,106,56,.8) 195deg,rgba(63,111,158,.8) 250deg,rgba(255,255,255,0) 320deg);
+  }
+  html[data-theme="light"] .blackhole .glow{
+    background:radial-gradient(closest-side,rgba(181,106,56,.16),transparent 70%);
+  }
+  @keyframes drift{from{transform:translateY(0)}to{transform:translateY(-520px)}}
+  @keyframes twinkle{0%,100%{opacity:.75}50%{opacity:.42}}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:
+      radial-gradient(46% 38% at 18% 20%,rgba(143,176,212,.20),transparent 60%),
+      radial-gradient(42% 36% at 82% 26%,rgba(181,106,56,.16),transparent 60%),
+      radial-gradient(54% 46% at 72% 76%,rgba(143,176,212,.14),transparent 62%),
+      radial-gradient(40% 34% at 28% 82%,rgba(181,106,56,.12),transparent 60%),
+      radial-gradient(120% 90% at 50% -12%,rgba(120,140,200,.07),transparent 60%);}
+
+  /* ---------- layout helpers ---------- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  section{position:relative}
+  .pad{padding:110px 0}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--ice);display:inline-flex;align-items:center;gap:.7em}
+  .eyebrow::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,var(--ice),transparent)}
+  h2.section-title{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.04;
+    font-size:clamp(2rem,4.6vw,3.4rem);margin:.5rem 0 1rem}
+  .section-head{max-width:680px;margin-bottom:3rem}
+  .section-head p{color:var(--muted);font-size:1.05rem}
+  .irid{background:linear-gradient(92deg,#ffffff,#8fb0d4 25%,#a8cbeb 50%,#b56a38 75%,#8fb0d4 92%,#ffffff);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  html[data-theme="light"] .irid{background:linear-gradient(92deg,#2f6fae,#3f6f9e 30%,#b56a38 72%,#2f6fae);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .glass{background:var(--panel);border:1px solid var(--line);border-radius:22px;
+    backdrop-filter:blur(14px) saturate(120%);-webkit-backdrop-filter:blur(14px) saturate(120%);position:relative}
+  .glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 30%)}
+  html[data-theme="light"] .glass::after{background:linear-gradient(180deg,rgba(255,255,255,.5),transparent 30%)}
+  .mono{font-family:var(--mono)}
+
+  /* ---------- nav ---------- */
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:.4s ease}
+  .nav-inner{max-width:var(--maxw);margin:18px auto 0;padding:15px 18px 15px 26px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    border:1px solid var(--nav-line);border-radius:100px;
+    background:var(--nav-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    box-shadow:0 12px 40px -12px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.03) inset;
+    transition:background .35s ease,border-color .35s ease;}
+  .nav-inner.scrolled{background:var(--nav-bg-scrolled);border-color:var(--nav-line-scrolled)}
+  html[data-theme="light"] .nav-inner{box-shadow:0 14px 40px -16px rgba(30,40,70,.3),0 0 0 1px rgba(255,255,255,.5) inset}
+  .brand{font-family:var(--display);font-weight:700;letter-spacing:-.01em;font-size:1.2rem;display:flex;align-items:center;gap:.7em;white-space:nowrap}
+  .brand .dot{width:11px;height:11px;border-radius:50%;
+    background:conic-gradient(from 0deg,#ffffff,#8fb0d4,#a8cbeb,#b56a38,#000000,#8fb0d4,#ffffff);box-shadow:0 0 12px rgba(143,176,212,.7)}
+  .nav-links{display:flex;gap:6px;align-items:center}
+  .nav-links a{font-size:1rem;color:var(--muted);padding:10px 16px;border-radius:100px;transition:.25s}
+  .nav-links a:hover{color:var(--text);background:var(--panel-2)}
+  .nav-tools{display:flex;align-items:center;gap:10px}
+  .icon-btn{font-family:var(--mono);font-size:.78rem;height:40px;min-width:40px;padding:0 12px;
+    border-radius:100px;border:1px solid var(--line-strong);background:var(--panel-2);color:var(--text);
+    cursor:pointer;transition:.25s;display:grid;place-items:center;line-height:1}
+  .icon-btn:hover{border-color:var(--ice);background:var(--panel)}
+  .nav-cta{font-family:var(--mono);font-size:.9rem;letter-spacing:.02em;padding:12px 22px;border-radius:100px;color:var(--text);
+    border:1px solid var(--line-strong);background:var(--panel-2);transition:.25s;white-space:nowrap}
+  .nav-cta:hover{background:var(--panel);border-color:var(--ice)}
+  .menu-btn{display:none;background:none;border:0;color:var(--text);font-size:1.4rem;cursor:pointer;padding:4px 8px}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:150px 0 80px}
+  .blackhole{position:absolute;top:46%;right:-6%;
+    transform:translateY(-50%) translateY(var(--bhY,0px)) scale(var(--bhS,1));
+    width:min(620px,80vw);height:min(620px,80vw);z-index:-1;pointer-events:none;
+    will-change:transform,opacity;opacity:.85}
+  .blackhole .ring{position:absolute;inset:0;border-radius:50%;
+    background:conic-gradient(from 210deg,rgba(255,255,255,0) 0deg,rgba(143,176,212,.55) 40deg,rgba(143,176,212,.85) 110deg,
+      rgba(255,255,255,.95) 155deg,rgba(181,106,56,.6) 195deg,rgba(143,176,212,.8) 250deg,rgba(255,255,255,0) 320deg);
+    -webkit-mask:radial-gradient(closest-side,transparent 56%,#000 58%,#000 70%,transparent 78%);
+            mask:radial-gradient(closest-side,transparent 56%,#000 58%,#000 70%,transparent 78%);
+    filter:blur(2px);animation:spin 11s linear infinite}
+  .blackhole .ring2{inset:5%;filter:blur(5px);opacity:.55;animation:spin 18s linear infinite reverse}
+  .blackhole .core{position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(closest-side,#000 52%,rgba(0,0,0,.85) 58%,transparent 62%);
+    box-shadow:0 0 120px 30px rgba(181,106,56,.30) inset;animation:corepulse 5s ease-in-out infinite}
+  .blackhole .glow{position:absolute;inset:-12%;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(181,106,56,.20),transparent 70%);filter:blur(30px);animation:glowpulse 5s ease-in-out infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes glowpulse{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+  @keyframes corepulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .hero h1{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1;
+    font-size:clamp(2.6rem,6vw,4.6rem);margin:18px 0 18px}
+  .hero .role{font-size:clamp(1.02rem,2.2vw,1.25rem);color:var(--muted);max-width:560px}
+  .hero .role b{color:var(--text);font-weight:600}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+  .btn-primary{font-family:var(--mono);font-size:.86rem;font-weight:700;padding:14px 26px;border-radius:100px;color:#0a0a0d;
+    background:linear-gradient(180deg,#fff,#e7e7ec);transition:.25s}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 40px -16px rgba(143,176,212,.55)}
+  html[data-theme="light"] .btn-primary{background:linear-gradient(180deg,#23252e,var(--btn-fill));color:#fff}
+  .btn-ghost{font-family:var(--mono);font-size:.86rem;padding:14px 24px;border-radius:100px;color:var(--text);
+    border:1px solid var(--line-strong);background:var(--panel);transition:.25s}
+  .btn-ghost:hover{background:var(--panel-2);border-color:var(--ice)}
+  .hero-meta{margin-top:34px;display:flex;gap:26px;flex-wrap:wrap;color:var(--muted-2);font-family:var(--mono);font-size:.74rem;letter-spacing:.08em}
+  .hero-meta span{display:inline-flex;gap:.5em;align-items:center}
+  .hero-meta i{width:5px;height:5px;border-radius:50%;background:var(--ice);font-style:normal}
+
+  /* ---------- terminal / code panels (stay dark in both themes) ---------- */
+  .terminal,.code{border-radius:16px;overflow:hidden;border:1px solid var(--line-strong);
+    background:rgba(8,9,12,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.03) inset}
+  html[data-theme="light"] .terminal,html[data-theme="light"] .code{border-color:rgba(12,16,28,.25);box-shadow:0 26px 60px -26px rgba(30,40,70,.4)}
+  .term-bar{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02)}
+  .term-bar i{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .term-bar .r{background:#ff5f56}.term-bar .y{background:#ffbd2e}.term-bar .g{background:#27c93f}
+  .term-bar .name{margin-left:8px;font-family:var(--mono);font-size:.72rem;color:#8a8f9e;letter-spacing:.04em}
+  .term-body{padding:18px 18px 22px;font-family:var(--mono);font-size:.82rem;line-height:1.85;min-height:230px;color:#cfd2dc}
+  .term-body .l{white-space:pre-wrap}
+  .term-body .p{color:#a8cbeb}
+  .term-body .c{color:#fff}
+  .term-body .o{color:#9b9ba6}
+  .term-body .ok{color:#7fd1a6}
+  .term-body .w{color:#cc8a52}
+  .caret{display:inline-block;width:8px;height:1.05em;background:#a8cbeb;vertical-align:-2px;margin-left:2px;animation:blink 1.05s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* ---------- engagement steps ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .step{padding:24px 22px;border-radius:16px;transition:transform .35s cubic-bezier(.2,.7,.2,1),background .35s,box-shadow .35s}
+  .step:hover{transform:translateY(-6px);background:var(--panel);box-shadow:0 26px 60px -30px rgba(0,0,0,.6)}
+  .step .num{transition:color .35s}
+  .step:hover .num{color:var(--text)}
+  .step:hover h3{color:var(--ice)}
+  .step .num{font-family:var(--mono);font-size:.74rem;color:var(--ice);letter-spacing:.1em}
+  .step h3{font-family:var(--display);font-weight:700;font-size:1.2rem;letter-spacing:-.01em;margin:12px 0 8px}
+  .step p{color:var(--muted);font-size:.93rem}
+
+  /* ---------- case studies ---------- */
+  .cases{display:grid;gap:44px}
+  .case{padding-top:44px;border-top:1px solid var(--line)}
+  .cases .case:first-child{padding-top:0;border-top:0}
+  .case-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .case-top h3{font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:-.01em;transition:color .3s}
+  .case:hover .case-top h3{color:var(--ice)}
+  .case-top .org{color:var(--ice);font-size:.96rem}
+  .case-top .when{font-family:var(--mono);font-size:.72rem;color:var(--muted-2);letter-spacing:.06em}
+  .case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .case-grid h4{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);margin-bottom:10px}
+  .case-grid p{color:var(--muted);font-size:.95rem}
+  .case-grid .out{color:var(--text)}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+  .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;color:var(--muted);
+    padding:5px 11px;border-radius:100px;border:1px solid var(--line);background:var(--panel)}
+
+  /* ---------- stack + code ---------- */
+  .stack-wrap{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+  .stack-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .stack-col{padding:20px 18px;border-radius:14px;transition:background .35s,transform .35s}
+  .stack-col:hover{background:var(--panel);transform:translateY(-4px)}
+  .stack-col:hover h4{color:var(--text)}
+  .stack-col h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ice);margin-bottom:14px}
+  .stack-col ul{list-style:none;display:grid;gap:7px}
+  .stack-col li{color:var(--muted);font-size:.92rem;display:flex;align-items:center;gap:.6em}
+  .stack-col li::before{content:"\25B8";color:var(--orange-soft);font-size:.8em}
+  .code .term-body{font-size:.78rem;line-height:1.8;min-height:0;white-space:pre;overflow-x:auto}
+  .code .kw{color:#c8a0ff}.code .ty{color:#a8cbeb}.code .st{color:#cc8a52}.code .cm{color:#7f8493}.code .fn{color:#fff}
+
+  /* ---------- metrics ---------- */
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .fact{text-align:center;padding:18px 8px;border-radius:14px;transition:background .3s,transform .3s}
+  .fact:hover{background:var(--panel);transform:translateY(-4px)}
+  .fact .n{transition:transform .3s;display:inline-block}
+  .fact:hover .n{transform:scale(1.06)}
+  .fact .n{font-family:var(--display);font-weight:800;font-size:2.6rem;letter-spacing:-.02em;
+    background:linear-gradient(135deg,#fff,#8fb0d4 45%,var(--ice-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  html[data-theme="light"] .fact .n{background:linear-gradient(135deg,#2f6fae,#b56a38);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .fact .l{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+  /* ---------- certs ---------- */
+  .cert-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .cert{padding:16px 14px;border-radius:14px;transition:background .3s,transform .3s,box-shadow .3s}
+  .cert:hover{background:var(--panel);transform:translateY(-4px);box-shadow:0 20px 44px -26px rgba(0,0,0,.55)}
+  .cert .badge{transition:transform .3s,box-shadow .3s}
+  .cert:hover .badge{transform:rotate(-8deg) scale(1.08);box-shadow:0 8px 20px -6px rgba(181,106,56,.5)}
+  .cert:hover h4{color:var(--ice)}
+  .cert .badge{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;margin-bottom:14px;
+    background:conic-gradient(from 140deg,#ffffff,#8fb0d4,#a8cbeb,#b56a38,#000000,#8fb0d4,#ffffff);
+    color:#0a0a0d;font-weight:800;font-family:var(--display)}
+  .cert h4{font-family:var(--display);font-weight:600;font-size:1rem;line-height:1.25;letter-spacing:-.01em}
+  .cert p{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);margin-top:8px}
+
+  /* ---------- contact ---------- */
+  .contact-wrap{padding:60px 44px;border-radius:30px;text-align:center;overflow:hidden;position:relative}
+  .contact-wrap::before{content:"";position:absolute;inset:0;z-index:-1;
+    background:radial-gradient(80% 120% at 50% 0%,rgba(143,176,212,.18),transparent 60%)}
+  .contact-wrap h2{font-family:var(--display);font-weight:800;letter-spacing:-.025em;font-size:clamp(2.2rem,5.5vw,4rem);line-height:1.02}
+  .contact-wrap p{color:var(--muted);max-width:520px;margin:16px auto 0;font-size:1.05rem}
+  .mailbtn{display:inline-block;margin-top:30px;font-family:var(--mono);font-size:.92rem;padding:16px 32px;border-radius:100px;color:#0a0a0d;font-weight:700;
+    background:linear-gradient(180deg,#fff,#e7e7ec);transition:.3s}
+  .mailbtn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -16px rgba(143,176,212,.55)}
+  html[data-theme="light"] .mailbtn{background:linear-gradient(180deg,#23252e,var(--btn-fill));color:#fff}
+  .socials{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .socials a{font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;padding:10px 18px;border-radius:100px;
+    border:1px solid var(--line);color:var(--muted);transition:.25s}
+  .socials a:hover{color:var(--text);border-color:var(--line-strong);background:var(--panel-2);transform:translateY(-2px)}
+
+  footer{padding:46px 0;border-top:1px solid var(--line);margin-top:90px}
+  .foot-inner{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;color:var(--muted-2);font-size:.84rem;font-family:var(--mono);letter-spacing:.04em}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(34px);will-change:opacity,transform;
+    transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .reveal.from-left{transform:translateX(-46px)}
+  .reveal.from-right{transform:translateX(46px)}
+  .reveal.zoom{transform:scale(.92)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal[data-d="1"]{transition-delay:.09s}
+  .reveal[data-d="2"]{transition-delay:.18s}
+  .reveal[data-d="3"]{transition-delay:.27s}
+  .reveal[data-d="4"]{transition-delay:.36s}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:36px}
+    .blackhole{right:-30%;opacity:.5}
+    .steps{grid-template-columns:repeat(2,1fr)}
+    .case-grid{grid-template-columns:1fr}
+    .stack-wrap{grid-template-columns:1fr}
+    .cert-grid,.facts{grid-template-columns:repeat(2,1fr)}
+    .nav-links{display:none}
+    .menu-btn{display:block}
+    .nav-links.open{display:flex;position:absolute;top:78px;left:14px;right:14px;flex-direction:column;
+      background:var(--nav-bg-scrolled);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:20px;padding:12px}
+  }
+  @media(max-width:560px){
+    .stack-cols,.cert-grid,.facts{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
+    .wrap{padding:0 18px}
+    .contact-wrap{padding:44px 22px}
+    .nav-cta{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="dot"></span>Cedrick&nbsp;Nwankeu</a>
+    <nav class="nav-links" id="navlinks">
+      <a href="#approach" data-i18n="nav.approach">Approach</a>
+      <a href="#work" data-i18n="nav.work">Case studies</a>
+      <a href="#stack" data-i18n="nav.stack">Stack</a>
+      <a href="#certs" data-i18n="nav.certs">Certs</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" id="langBtn" aria-label="Switch language">FR</button>
+      <button class="icon-btn" id="themeBtn" aria-label="Switch theme">🌙</button>
+      <a href="#contact" class="nav-cta" data-i18n="nav.cta">Book a call &rarr;</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu">&#9776;</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="blackhole" aria-hidden="true">
+    <div class="glow"></div>
+    <div class="ring"></div>
+    <div class="ring ring2"></div>
+    <div class="core"></div>
+  </div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow reveal" data-i18n="hero.eyebrow">Senior Salesforce Developer Consultant · Argyle, TX</span>
+        <h1 class="reveal" data-d="1" data-i18n="hero.h1">I turn messy orgs into systems that <span class="irid">pay for themselves.</span></h1>
+        <p class="role reveal" data-d="2" data-i18n="hero.role">Ten years across the <b>Federal Reserve</b>, <b>Slalom</b>, and <b>CoreLogic</b>, shipping Agentforce, Experience Cloud, and integrations that cut cost and case load. I scope it, design it, then build it myself.</p>
+        <div class="hero-cta reveal" data-d="3">
+          <a href="#contact" class="btn-primary" data-i18n="hero.btn1">Book a discovery call</a>
+          <a href="#work" class="btn-ghost" data-i18n="hero.btn2">See case studies</a>
+        </div>
+        <div class="hero-meta reveal" data-d="3">
+          <span data-i18n="hero.meta1"><i></i>10+ years on platform</span>
+          <span data-i18n="hero.meta2"><i></i>7&times; certified</span>
+          <span><i></i>EN · FR · DE · ES</span>
+        </div>
+      </div>
+      <div class="terminal reveal" data-d="2" aria-hidden="true">
+        <div class="term-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="name">cedrick@salesforce ~ %</span></div>
+        <div class="term-body" id="term"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="pad" id="approach">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="approach.eyebrow">How I work</span>
+      <h2 class="section-title" data-i18n="approach.title">A consultant's process, an <span class="irid">engineer's hands.</span></h2>
+      <p data-i18n="approach.p">I scope the business problem, design the architecture, then build and ship it myself. No hand-off gap between the slide deck and the org.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal from-left" data-d="1">
+        <div class="num" data-i18n="step.n1">01 / Discovery</div>
+        <h3 data-i18n="step.h1">Map the problem</h3>
+        <p data-i18n="step.p1">Interview stakeholders, trace the process, and find where cost and case load actually pile up.</p>
+      </div>
+      <div class="step reveal from-left" data-d="2">
+        <div class="num" data-i18n="step.n2">02 / Architecture</div>
+        <h3 data-i18n="step.h2">Design the system</h3>
+        <p data-i18n="step.p2">Data model, automation, and integration boundaries. Decisions written down, trade-offs made in the open.</p>
+      </div>
+      <div class="step reveal from-right" data-d="3">
+        <div class="num" data-i18n="step.n3">03 / Build</div>
+        <h3 data-i18n="step.h3">Ship the code</h3>
+        <p data-i18n="step.p3">Apex, LWC, Flows, and OmniStudio, with tests and CI/CD so releases stay clean across orgs.</p>
+      </div>
+      <div class="step reveal from-right" data-d="4">
+        <div class="num" data-i18n="step.n4">04 / Enablement</div>
+        <h3 data-i18n="step.h4">Hand it over</h3>
+        <p data-i18n="step.p4">Documentation, admin training, and self-service so the team runs it without me in the loop.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="pad" id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="work.eyebrow">Case studies</span>
+      <h2 class="section-title" data-i18n="work.title">10 years, Several orgs, <span class="irid">one craft.</span></h2>
+      <p data-i18n="work.p">Each engagement, framed the way I think about them: the context, the problem, the build, and what shipped.</p>
+    </div>
+    <div class="cases">
+
+      <div class="case reveal" data-d="1">
+        <div class="case-top">
+          <div><h3 data-i18n="case.h1">AI support agents for HR</h3><div class="org" data-i18n="case.org1">Federal Reserve Bank of Chicago · Senior Salesforce Developer Consultant</div></div>
+          <div class="when" data-i18n="case.when1">Aug 2022 · Present</div>
+        </div>
+        <div class="case-grid">
+          <div><h4 data-i18n="case.ctx">Context</h4><p data-i18n="case.c1ctx">HR fielded the same benefits, leave, and policy questions on repeat, tying up the team.</p></div>
+          <div><h4 data-i18n="case.app">Approach</h4><p data-i18n="case.c1app">Stood up Data Cloud and Agentforce to answer employees directly, with Experience Cloud and LWC on the front end and secure REST / Platform Event integrations behind it.</p></div>
+          <div><h4 data-i18n="case.out">Outcome</h4><p class="out" data-i18n="case.c1out">Employees self-serve answers on benefits, leave, and procedures. Routine HR cases get deflected before they reach a person.</p></div>
+        </div>
+        <div class="tags">
+          <span class="tag">Agentforce</span><span class="tag">Data Cloud</span><span class="tag">Experience Cloud</span>
+          <span class="tag">LWC · SLDS</span><span class="tag">REST API</span><span class="tag">Platform Events</span><span class="tag">CI/CD</span>
+        </div>
+      </div>
+
+      <div class="case reveal" data-d="1">
+        <div class="case-top">
+          <div><h3 data-i18n="case.h2">Self-service &amp; delivery for clients</h3><div class="org" data-i18n="case.org2">Slalom LLC · Salesforce Consultant (Developer)</div></div>
+          <div class="when" data-i18n="case.when2">Mar 2020 · Aug 2022</div>
+        </div>
+        <div class="case-grid">
+          <div><h4 data-i18n="case.ctx">Context</h4><p data-i18n="case.c2ctx">Business partners arrived with open-ended requests and tight timelines across multiple clients.</p></div>
+          <div><h4 data-i18n="case.app">Approach</h4><p data-i18n="case.c2app">Researched options, proposed designs, and built demos to align fast. Shipped Apex, LWC, external-object APIs, OmniStudio forms, and Einstein Bots.</p></div>
+          <div><h4 data-i18n="case.out">Outcome</h4><p class="out" data-i18n="case.c2out">Bots drove self-service and case deflection. Deployment ran on Gearset, Copado, GitHub, and GitLab, and I led the technical solution design.</p></div>
+        </div>
+        <div class="tags">
+          <span class="tag">Apex</span><span class="tag">LWC</span><span class="tag">OmniStudio</span><span class="tag">Einstein Bots</span>
+          <span class="tag">External Objects</span><span class="tag">Gearset · Copado</span><span class="tag">Solution Design</span>
+        </div>
+      </div>
+
+      <div class="case reveal" data-d="1">
+        <div class="case-top">
+          <div><h3 data-i18n="case.h3t">Platform build &amp; integration</h3><div class="org" data-i18n="case.org3">CoreLogic · Salesforce Developer</div></div>
+          <div class="when" data-i18n="case.when3">May 2016 · Mar 2020</div>
+        </div>
+        <div class="case-grid">
+          <div><h4 data-i18n="case.ctx">Context</h4><p data-i18n="case.c3ctx">A growing org needed steady feature work and reliable links to other platforms.</p></div>
+          <div><h4 data-i18n="case.app">Approach</h4><p data-i18n="case.c3app">Built and maintained Visualforce, Apex, triggers, Lightning components, and unit tests, and managed integrations between Salesforce and other systems.</p></div>
+          <div><h4 data-i18n="case.out">Outcome</h4><p class="out" data-i18n="case.c3out">Shipped bug fixes and enhancements, supported end users directly, and kept cross-platform integrations healthy.</p></div>
+        </div>
+        <div class="tags">
+          <span class="tag">Visualforce</span><span class="tag">Apex</span><span class="tag">Triggers</span>
+          <span class="tag">Lightning</span><span class="tag">Unit Tests</span><span class="tag">Integrations</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="pad" id="stack">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="stack.eyebrow">The stack</span>
+      <h2 class="section-title" data-i18n="stack.title">Full-stack, <span class="irid">Salesforce-deep.</span></h2>
+      <p data-i18n="stack.p">Front to back, configuration to code, design to deployment. The tools I reach for, and how the code reads.</p>
+    </div>
+    <div class="stack-wrap">
+      <div class="stack-cols">
+        <div class="stack-col reveal zoom" data-d="1">
+          <h4 data-i18n="stack.col1">Platform</h4>
+          <ul><li>Apex · Triggers</li><li>LWC · Aura · SLDS</li><li>Flows · OmniStudio</li><li>SOQL · SOSL</li><li>Experience Cloud</li></ul>
+        </div>
+        <div class="stack-col reveal zoom" data-d="2">
+          <h4 data-i18n="stack.col2">AI &amp; Data</h4>
+          <ul><li>Agentforce</li><li>Einstein Bots</li><li>Data Cloud</li><li data-i18n="stack.prompt">Prompt &amp; agent design</li><li>Claude · Codex</li></ul>
+        </div>
+        <div class="stack-col reveal zoom" data-d="3">
+          <h4 data-i18n="stack.col3">Integration</h4>
+          <ul><li>REST · SOAP APIs</li><li>Platform Events</li><li>External Objects</li><li>GraphQL</li><li>Named Credentials</li></ul>
+        </div>
+        <div class="stack-col reveal zoom" data-d="4">
+          <h4 data-i18n="stack.col4">DevOps</h4>
+          <ul><li>Gearset · Copado</li><li>Git · GitHub · GitLab</li><li>SFDX · Salesforce CLI</li><li>Jest · Apex tests</li><li>CI/CD pipelines</li></ul>
+        </div>
+      </div>
+      <div class="code reveal from-right" data-d="2" aria-hidden="true">
+        <div class="term-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="name">CaseDeflection.cls</span></div>
+        <div class="term-body"><span class="cm">// route a question to the right agent, deflect before it becomes a case</span>
+<span class="kw">public with sharing class</span> <span class="ty">CaseDeflection</span> {
+  <span class="kw">@InvocableMethod</span>(label=<span class="st">'Resolve Inquiry'</span>)
+  <span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">Result</span>&gt; <span class="fn">resolve</span>(<span class="ty">List</span>&lt;<span class="ty">Inquiry</span>&gt; inquiries) {
+    <span class="ty">List</span>&lt;<span class="ty">Result</span>&gt; out = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">Result</span>&gt;();
+    <span class="kw">for</span> (<span class="ty">Inquiry</span> q : inquiries) {
+      <span class="ty">Answer</span> a = <span class="ty">Agent</span>.<span class="fn">ask</span>(q.topic, q.text);   <span class="cm">// Agentforce + Data Cloud</span>
+      out.<span class="fn">add</span>(a.confident
+        ? <span class="ty">Result</span>.<span class="fn">deflect</span>(a)            <span class="cm">// self-served</span>
+        : <span class="ty">Result</span>.<span class="fn">escalate</span>(q));          <span class="cm">// hand to a human</span>
+    }
+    <span class="kw">return</span> out;
+  }
+}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="pad" style="padding-top:0">
+  <div class="wrap">
+    <div class="facts">
+      <div class="fact reveal" data-d="1"><div class="n">10+</div><div class="l" data-i18n="facts.l1">Years Building</div></div>
+      <div class="fact reveal" data-d="2"><div class="n">7&times;</div><div class="l" data-i18n="facts.l2">Certifications</div></div>
+      <div class="fact reveal" data-d="3"><div class="n">10+</div><div class="l" data-i18n="facts.l3">Team Members Led</div></div>
+      <div class="fact reveal" data-d="4"><div class="n">4</div><div class="l" data-i18n="facts.l4">Languages Spoken</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section class="pad" id="certs" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="certs.eyebrow">Certifications</span>
+      <h2 class="section-title" data-i18n="certs.title">Credentials that back the <span class="irid">code.</span></h2>
+    </div>
+    <div class="cert-grid">
+      <div class="cert reveal" data-d="1"><div class="badge">✦</div><h4>Platform Developer I</h4><p>Salesforce</p></div>
+      <div class="cert reveal" data-d="1"><div class="badge">◈</div><h4>Agentforce Specialist</h4><p data-i18n="cert.sfc">Salesforce Certified</p></div>
+      <div class="cert reveal" data-d="2"><div class="badge">◬</div><h4>Experience Cloud Consultant</h4><p data-i18n="cert.sfc">Salesforce Certified</p></div>
+      <div class="cert reveal" data-d="2"><div class="badge">⬡</div><h4>Service Cloud Consultant</h4><p data-i18n="cert.sfc">Salesforce Certified</p></div>
+      <div class="cert reveal" data-d="1"><div class="badge">⛭</div><h4>Certified Administrator</h4><p>Salesforce</p></div>
+      <div class="cert reveal" data-d="2"><div class="badge">△</div><h4>AWS Solution Architect</h4><p>Amazon Web Services</p></div>
+      <div class="cert reveal" data-d="3"><div class="badge">⟳</div><h4>Professional Scrum Master</h4><p>Scrum.org</p></div>
+      <div class="cert reveal" data-d="3"><div class="badge">⌁</div><h4 data-i18n="cert.degree">B.S. Petroleum, Math Minor</h4><p>Louisiana State University</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="pad" id="contact" style="padding-top:0">
+  <div class="wrap">
+    <div class="contact-wrap reveal">
+      <span class="eyebrow" style="justify-content:center" data-i18n="contact.eyebrow">Let's connect</span>
+      <h2 data-i18n="contact.h2">Got a process worth <span class="irid">upgrading?</span></h2>
+      <p data-i18n="contact.p">Whether it's an AI agent, an Experience Cloud build, or a stubborn integration, let's scope it. Based in Argyle, TX, available in EN / FR.</p>
+      <a href="mailto:cednwankeu@gmail.com" class="mailbtn">cednwankeu@gmail.com &rarr;</a>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/cedrick-nwankeu/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+        <a href="https://github.com/cedAang" target="_blank" rel="noopener">GitHub &#8599;</a>
+        <a href="https://www.salesforce.com/trailblazer/cednwankeu" target="_blank" rel="noopener">Trailhead &#8599;</a>
+        <a href="tel:+18178057905">(817) 805-7905</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span data-i18n="footer.left">© 2026 Cedrick Nwankeu · Senior Salesforce Developer Consultant</span>
+    <span data-i18n="footer.right">Built in the dark ✦ Argyle, TX</span>
+  </div>
+</footer>
+
+<script>
+  // ============ i18n (EN / FR) ============
+  const I18N = {
+    "nav.approach":{en:"Approach",fr:"Approche"},
+    "nav.work":{en:"Case studies",fr:"Études de cas"},
+    "nav.stack":{en:"Stack",fr:"Stack"},
+    "nav.certs":{en:"Certs",fr:"Certifs"},
+    "nav.cta":{en:"Book a call →",fr:"Réserver un appel →"},
+
+    "hero.eyebrow":{en:"Senior Salesforce Developer Consultant · Argyle, TX",fr:"Consultant développeur Salesforce senior · Argyle, TX"},
+    "hero.h1":{en:'I turn messy orgs into systems that <span class="irid">pay for themselves.</span>',fr:'Je transforme des orgs en désordre en systèmes qui <span class="irid">se rentabilisent.</span>'},
+    "hero.role":{en:'Ten years across the <b>Federal Reserve</b>, <b>Slalom</b>, and <b>CoreLogic</b>, shipping Agentforce, Experience Cloud, and integrations that cut cost and case load. I scope it, design it, then build it myself.',fr:'Dix ans à la <b>Federal Reserve</b>, chez <b>Slalom</b> et <b>CoreLogic</b>, à livrer Agentforce, Experience Cloud et des intégrations qui réduisent les coûts et la charge de cas. Je le cadre, je le conçois, puis je le construis moi-même.'},
+    "hero.btn1":{en:"Book a discovery call",fr:"Réserver un appel découverte"},
+    "hero.btn2":{en:"See case studies",fr:"Voir les études de cas"},
+    "hero.meta1":{en:'<i></i>10+ years on platform',fr:'<i></i>10+ ans sur la plateforme'},
+    "hero.meta2":{en:'<i></i>7× certified',fr:'<i></i>7× certifié'},
+
+    "approach.eyebrow":{en:"How I work",fr:"Ma méthode"},
+    "approach.title":{en:'A consultant\'s process, an <span class="irid">engineer\'s hands.</span>',fr:'Une méthode de consultant, des <span class="irid">mains d\'ingénieur.</span>'},
+    "approach.p":{en:'I scope the business problem, design the architecture, then build and ship it myself. No hand-off gap between the slide deck and the org.',fr:'Je cadre le problème métier, je conçois l\'architecture, puis je développe et livre moi-même. Aucune rupture entre le slide et l\'org.'},
+    "step.n1":{en:"01 / Discovery",fr:"01 / Découverte"},
+    "step.h1":{en:"Map the problem",fr:"Cartographier le problème"},
+    "step.p1":{en:"Interview stakeholders, trace the process, and find where cost and case load actually pile up.",fr:"Interroger les parties prenantes, tracer le processus et repérer où les coûts et la charge de cas s'accumulent vraiment."},
+    "step.n2":{en:"02 / Architecture",fr:"02 / Architecture"},
+    "step.h2":{en:"Design the system",fr:"Concevoir le système"},
+    "step.p2":{en:"Data model, automation, and integration boundaries. Decisions written down, trade-offs made in the open.",fr:"Modèle de données, automatisation et frontières d'intégration. Décisions écrites, compromis assumés ouvertement."},
+    "step.n3":{en:"03 / Build",fr:"03 / Développement"},
+    "step.h3":{en:"Ship the code",fr:"Livrer le code"},
+    "step.p3":{en:"Apex, LWC, Flows, and OmniStudio, with tests and CI/CD so releases stay clean across orgs.",fr:"Apex, LWC, Flows et OmniStudio, avec tests et CI/CD pour des releases propres entre les orgs."},
+    "step.n4":{en:"04 / Enablement",fr:"04 / Transmission"},
+    "step.h4":{en:"Hand it over",fr:"Transmettre"},
+    "step.p4":{en:"Documentation, admin training, and self-service so the team runs it without me in the loop.",fr:"Documentation, formation des admins et self-service pour que l'équipe gère sans moi."},
+
+    "work.eyebrow":{en:"Case studies",fr:"Études de cas"},
+    "work.title":{en:'10 years, Several orgs, <span class="irid">one craft.</span>',fr:'10 ans, plusieurs organisations, <span class="irid">un seul métier.</span>'},
+    "work.p":{en:"Each engagement, framed the way I think about them: the context, the problem, the build, and what shipped.",fr:"Chaque mission, présentée comme je les pense : le contexte, le problème, le build et ce qui a été livré."},
+    "case.ctx":{en:"Context",fr:"Contexte"},
+    "case.app":{en:"Approach",fr:"Approche"},
+    "case.out":{en:"Outcome",fr:"Résultat"},
+    "case.h1":{en:"AI support agents for HR",fr:"Agents de support IA pour les RH"},
+    "case.org1":{en:"Federal Reserve Bank of Chicago · Senior Salesforce Developer Consultant",fr:"Federal Reserve Bank of Chicago · Consultant développeur Salesforce senior"},
+    "case.when1":{en:"Aug 2022 · Present",fr:"Août 2022 · Présent"},
+    "case.c1ctx":{en:"HR fielded the same benefits, leave, and policy questions on repeat, tying up the team.",fr:"Les RH recevaient sans cesse les mêmes questions sur les avantages, les congés et les politiques, mobilisant l'équipe."},
+    "case.c1app":{en:"Stood up Data Cloud and Agentforce to answer employees directly, with Experience Cloud and LWC on the front end and secure REST / Platform Event integrations behind it.",fr:"Mis en place Data Cloud et Agentforce pour répondre directement aux employés, avec Experience Cloud et LWC en façade et des intégrations REST / Platform Events sécurisées derrière."},
+    "case.c1out":{en:"Employees self-serve answers on benefits, leave, and procedures. Routine HR cases get deflected before they reach a person.",fr:"Les employés trouvent eux-mêmes les réponses sur les avantages, les congés et les procédures. Les cas RH courants sont déviés avant d'atteindre une personne."},
+    "case.h2":{en:'Self-service &amp; delivery for clients',fr:'Self-service et livraison pour les clients'},
+    "case.org2":{en:"Slalom LLC · Salesforce Consultant (Developer)",fr:"Slalom LLC · Consultant Salesforce (Développeur)"},
+    "case.when2":{en:"Mar 2020 · Aug 2022",fr:"Mars 2020 · Août 2022"},
+    "case.c2ctx":{en:"Business partners arrived with open-ended requests and tight timelines across multiple clients.",fr:"Les partenaires métier arrivaient avec des demandes ouvertes et des délais serrés sur plusieurs clients."},
+    "case.c2app":{en:"Researched options, proposed designs, and built demos to align fast. Shipped Apex, LWC, external-object APIs, OmniStudio forms, and Einstein Bots.",fr:"Étudié les options, proposé des designs et créé des démos pour aligner vite. Livré de l'Apex, des LWC, des API d'objets externes, des formulaires OmniStudio et des Einstein Bots."},
+    "case.c2out":{en:"Bots drove self-service and case deflection. Deployment ran on Gearset, Copado, GitHub, and GitLab, and I led the technical solution design.",fr:"Les bots ont permis le self-service et la déflexion de cas. Le déploiement tournait sur Gearset, Copado, GitHub et GitLab, et j'ai piloté la conception technique des solutions."},
+    "case.h3t":{en:'Platform build &amp; integration',fr:'Build et intégration de plateforme'},
+    "case.org3":{en:"CoreLogic · Salesforce Developer",fr:"CoreLogic · Développeur Salesforce"},
+    "case.when3":{en:"May 2016 · Mar 2020",fr:"Mai 2016 · Mars 2020"},
+    "case.c3ctx":{en:"A growing org needed steady feature work and reliable links to other platforms.",fr:"Une org en croissance avait besoin de fonctionnalités régulières et de liens fiables vers d'autres plateformes."},
+    "case.c3app":{en:"Built and maintained Visualforce, Apex, triggers, Lightning components, and unit tests, and managed integrations between Salesforce and other systems.",fr:"Créé et maintenu du Visualforce, de l'Apex, des triggers, des composants Lightning et des tests unitaires, et géré les intégrations entre Salesforce et d'autres systèmes."},
+    "case.c3out":{en:"Shipped bug fixes and enhancements, supported end users directly, and kept cross-platform integrations healthy.",fr:"Livré des corrections et des améliorations, accompagné directement les utilisateurs finaux et maintenu des intégrations multiplateformes saines."},
+
+    "stack.eyebrow":{en:"The stack",fr:"La stack"},
+    "stack.title":{en:'Full-stack, <span class="irid">Salesforce-deep.</span>',fr:'Full-stack, <span class="irid">spécialiste Salesforce.</span>'},
+    "stack.p":{en:"Front to back, configuration to code, design to deployment. The tools I reach for, and how the code reads.",fr:"Du front au back, de la configuration au code, du design au déploiement. Les outils que j'utilise, et à quoi ressemble le code."},
+    "stack.col1":{en:"Platform",fr:"Plateforme"},
+    "stack.col2":{en:'AI &amp; Data',fr:'IA &amp; Données'},
+    "stack.col3":{en:"Integration",fr:"Intégration"},
+    "stack.col4":{en:"DevOps",fr:"DevOps"},
+    "stack.prompt":{en:'Prompt &amp; agent design',fr:'Conception de prompts &amp; d\'agents'},
+
+    "facts.l1":{en:'Years Building',fr:'Ans d\'expérience'},
+    "facts.l2":{en:'Certifications',fr:'Certifications'},
+    "facts.l3":{en:'Team Members Led',fr:'Personnes encadrées'},
+    "facts.l4":{en:'Languages Spoken',fr:'Langues parlées'},
+
+    "certs.eyebrow":{en:'Certifications',fr:'Certifications'},
+    "certs.title":{en:'Credentials that back the <span class="irid">code.</span>',fr:'Des titres qui valident le <span class="irid">code.</span>'},
+    "cert.sfc":{en:'Salesforce Certified',fr:'Certifié Salesforce'},
+    "cert.degree":{en:'B.S. Petroleum, Math Minor',fr:'Licence en pétrole, mineure en maths'},
+
+    "contact.eyebrow":{en:"Let's connect",fr:'Connectons-nous'},
+    "contact.h2":{en:'Got a process worth <span class="irid">upgrading?</span>',fr:'Un processus à <span class="irid">améliorer ?</span>'},
+    "contact.p":{en:'Whether it\'s an AI agent, an Experience Cloud build, or a stubborn integration, let\'s scope it. Based in Argyle, TX, available in EN / FR.',fr:'Que ce soit un agent IA, un build Experience Cloud ou une intégration récalcitrante, cadrons-le. Basé à Argyle, TX, disponible en EN / FR.'},
+
+    "footer.left":{en:'© 2026 Cedrick Nwankeu · Senior Salesforce Developer Consultant',fr:'© 2026 Cedrick Nwankeu · Consultant développeur Salesforce senior'},
+    "footer.right":{en:'Built in the dark ✦ Argyle, TX',fr:'Conçu dans le noir ✦ Argyle, TX'}
+  };
+  const langBtn=document.getElementById('langBtn');
+  function setLang(l){
+    document.documentElement.lang=l;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const t=I18N[el.dataset.i18n];
+      if(t&&t[l]!=null) el.innerHTML=t[l];
+    });
+    langBtn.textContent = l==='en' ? 'FR' : 'EN';
+    try{localStorage.setItem('lang',l);}catch(e){}
+  }
+
+  // ============ theme (dark / light) ============
+  const themeBtn=document.getElementById('themeBtn');
+  function setTheme(t){
+    document.documentElement.setAttribute('data-theme',t);
+    themeBtn.textContent = t==='light' ? '☀' : '🌙';
+    try{localStorage.setItem('theme',t);}catch(e){}
+  }
+
+  let savedTheme='dark',savedLang='en';
+  try{savedTheme=localStorage.getItem('theme')||'dark';savedLang=localStorage.getItem('lang')||'en';}catch(e){}
+  setTheme(savedTheme); setLang(savedLang);
+  themeBtn.addEventListener('click',()=>setTheme(document.documentElement.getAttribute('data-theme')==='light'?'dark':'light'));
+  langBtn.addEventListener('click',()=>setLang(document.documentElement.lang==='fr'?'en':'fr'));
+
+  // ============ typed terminal ============
+  const lines=[
+    {t:'$ ',cls:'p',txt:'whoami',after:'c'},
+    {t:'',cls:'o',txt:'cedrick: salesforce consultant + developer'},
+    {t:'$ ',cls:'p',txt:'cat focus.json',after:'c'},
+    {t:'',cls:'o',txt:'{ "agentforce": true, "experienceCloud": true, "integrations": "secure" }'},
+    {t:'$ ',cls:'p',txt:'deploy --to prod --tests all',after:'c'},
+    {t:'',cls:'ok',txt:'✔ 100% pass · releases clean across orgs'},
+    {t:'$ ',cls:'p',txt:'status',after:'c'},
+    {t:'',cls:'w',txt:'available for new engagements →'}
+  ];
+  const term=document.getElementById('term');
+  let li=0,ci=0;
+  function type(){
+    if(!term||li>=lines.length){ if(term){term.querySelectorAll('.caret').forEach(c=>c.remove());const c=document.createElement('span');c.className='caret';term.appendChild(c);} return; }
+    const line=lines[li];
+    let row=term.children[li];
+    if(!row){ row=document.createElement('div'); row.className='l';
+      const pre=document.createElement('span'); pre.className=line.cls; pre.textContent=line.t; row.appendChild(pre);
+      const body=document.createElement('span'); body.className=line.after||line.cls; row.appendChild(body);
+      term.appendChild(row);
+    }
+    const body=row.lastChild;
+    if(ci<line.txt.length){ body.textContent+=line.txt[ci++]; setTimeout(type, 18+Math.random()*40); }
+    else { li++; ci=0; setTimeout(type, 380); }
+  }
+  setTimeout(type, 600);
+
+  // ============ scroll-linked reveal ============
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ e.target.classList.toggle('in', e.isIntersecting); });
+  },{threshold:.14,rootMargin:"0px 0px -10% 0px"});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // ============ nav state on scroll (class-based, theme-safe) ============
+  const nav=document.querySelector('.nav-inner');
+  function navState(){ nav.classList.toggle('scrolled', scrollY>30); }
+  addEventListener('scroll',navState,{passive:true}); navState();
+
+  // ============ smooth blackhole parallax ============
+  const bh=document.querySelector('.blackhole');
+  let curY=0,curS=1,curO=.85;
+  function frame(){
+    const y=scrollY;
+    const tY=-y*0.22, tS=Math.max(.6,1-y/2600), tO=Math.max(0,.85-y/900);
+    const ease=0.08;
+    curY+=(tY-curY)*ease; curS+=(tS-curS)*ease; curO+=(tO-curO)*ease;
+    if(bh){bh.style.setProperty('--bhY',curY.toFixed(2)+'px');bh.style.setProperty('--bhS',curS.toFixed(3));bh.style.opacity=curO.toFixed(3);}
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // ============ mobile menu ============
+  const btn=document.getElementById('menuBtn'),links=document.getElementById('navlinks');
+  btn.addEventListener('click',()=>links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+</script>
+</body>
+</html>

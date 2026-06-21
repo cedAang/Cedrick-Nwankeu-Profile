@@ -1,0 +1,10 @@
+# scrape / scratch artifacts (not part of the site)
+yoondev.com_*.json
+yoondev.com_*.md
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.tmp
+_*.png
+_*.html

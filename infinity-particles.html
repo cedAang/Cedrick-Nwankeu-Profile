@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infinity Particles</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #050506; }
+    #app { position: relative; width: 100vw; height: 100vh; cursor: grab; }
+    #app:active { cursor: grabbing; }
+
+    /* atmospheric starfield, shared with the portfolio */
+    .stars, .stars2 { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .stars { background-image:
+      radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+      radial-gradient(1px 1px at 75% 12%, rgba(255,255,255,.7), transparent),
+      radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,.6), transparent),
+      radial-gradient(1.5px 1.5px at 88% 60%, #fff, transparent),
+      radial-gradient(1px 1px at 12% 65%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 60% 45%, rgba(255,255,255,.55), transparent),
+      radial-gradient(1px 1px at 92% 88%, rgba(255,255,255,.6), transparent),
+      radial-gradient(1px 1px at 33% 18%, rgba(255,255,255,.5), transparent);
+      background-repeat: repeat; background-size: 520px 520px; opacity: .5;
+      animation: drift 240s linear infinite; }
+    .stars2 { background-image:
+      radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,.4), transparent),
+      radial-gradient(1px 1px at 15% 22%, rgba(255,255,255,.35), transparent),
+      radial-gradient(1px 1px at 70% 70%, rgba(255,255,255,.4), transparent);
+      background-repeat: repeat; background-size: 340px 340px; opacity: .35;
+      animation: drift 160s linear infinite reverse; }
+    @keyframes drift { from { transform: translateY(0); } to { transform: translateY(-520px); } }
+
+    canvas { position: relative; z-index: 1; }
+
+    .hint {
+      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+      color: #6e6e79; font-family: "Space Mono", ui-monospace, monospace; font-size: .78rem;
+      letter-spacing: .08em; pointer-events: none; z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div id="app">
+    <div class="hint">drag to orbit &middot; scroll to zoom</div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+    /* ---------- config (themed to the portfolio palette) ---------- */
+    const SCALE = 11;
+    const THICKNESS = 0.6;
+    const DEPTH = 2;
+    const LEFT_COLOR  = "8fb0d4";   // sky blue
+    const RIGHT_COLOR = "b56a38";   // burnt orange
+    const BG = 0x050506;
+    const NUM_POINTS = 2500;
+    const SCATTER_RADIUS = 17;
+    const MORPH_SPEED = 0.045;
+
+    /* ---------- color helpers ---------- */
+    const getGradientStop = (ratio) => {
+      ratio = ratio > 1 ? 1 : ratio < 0 ? 0 : ratio;
+      const c0 = LEFT_COLOR.match(/.{1,2}/g).map((o) => parseInt(o, 16) * (1 - ratio));
+      const c1 = RIGHT_COLOR.match(/.{1,2}/g).map((o) => parseInt(o, 16) * ratio);
+      const ci = [0, 1, 2].map((i) => Math.min(Math.round(c0[i] + c1[i]), 255));
+      return ci.reduce((a, v) => (a << 8) + v, 0).toString(16).padStart(6, "0");
+    };
+    const calculateColor = (x) => parseInt(getGradientStop((x + SCALE) / (SCALE * 2)), 16);
+    const rand = (min, max) => Math.random() * (max - min) + min;
+
+    // Lemniscate of Bernoulli: the true infinity curve
+    const infinityPoint = (t) => {
+      const denom = 1 + Math.sin(t) * Math.sin(t);
+      return {
+        x: (SCALE * Math.cos(t)) / denom,
+        y: (SCALE * Math.sin(t) * Math.cos(t)) / denom,
+      };
+    };
+
+    /* ---------- build particles: scattered home + infinity target ---------- */
+    const buildParticles = (count, rMin, rMax, depthMul) => {
+      const arr = [];
+      for (let i = 0; i < count; i++) {
+        const t = Math.random() * Math.PI * 2;
+        const { x: bx, y: by } = infinityPoint(t);
+        const a = Math.random() * Math.PI * 2;
+        const r = rand(rMin, rMax);
+        const target = [
+          bx + Math.cos(a) * r,
+          by + Math.sin(a) * r,
+          rand(-DEPTH * depthMul, DEPTH * depthMul),
+        ];
+        const home = [
+          rand(-SCATTER_RADIUS, SCATTER_RADIUS),
+          rand(-SCATTER_RADIUS, SCATTER_RADIUS),
+          rand(-SCATTER_RADIUS, SCATTER_RADIUS),
+        ];
+        arr.push({ target, home, color: calculateColor(bx) });
+      }
+      return arr;
+    };
+
+    const particles = [
+      ...buildParticles(NUM_POINTS, 0, THICKNESS, 1),
+      ...buildParticles(NUM_POINTS / 4, THICKNESS, THICKNESS * 4, 6),
+    ];
+
+    /* ---------- scene ---------- */
+    const app = document.getElementById("app");
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(BG);
+
+    const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 18);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    app.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.minDistance = 10;
+    controls.maxDistance = 30;
+
+    scene.add(new THREE.DirectionalLight(0xffffff, 1.2));
+    const pointLight = new THREE.PointLight(0xffffff, 800);
+    pointLight.position.set(-30, 0, -30);
+    scene.add(pointLight);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.18));
+
+    const group = new THREE.Group();
+    const geo = new THREE.SphereGeometry(0.1, 10, 10);
+    for (const p of particles) {
+      const mat = new THREE.MeshStandardMaterial({
+        color: p.color,
+        emissive: p.color,
+        emissiveIntensity: 0.75,
+        roughness: 0.45,
+      });
+      p.mesh = new THREE.Mesh(geo, mat);
+      p.mesh.position.set(...p.home); // start dispersed
+      group.add(p.mesh);
+    }
+    scene.add(group);
+
+    /* ---------- assembly: auto-forms shortly after load ----------
+       formed eases 0 -> 1 once the start delay passes, so the infinity
+       assembles itself. Pointer-leaving the scene gently re-scatters it,
+       pointer-entering re-forms it. */
+    let formed = 0;
+    let assemble = false;
+    setTimeout(() => { assemble = true; }, 500);
+
+    app.addEventListener("pointerenter", () => { assemble = true; });
+    app.addEventListener("pointerleave", () => { assemble = false; });
+
+    /* ---------- loop ---------- */
+    const tmp = new THREE.Vector3();
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+
+      formed += ((assemble ? 1 : 0) - formed) * MORPH_SPEED;
+
+      for (const p of particles) {
+        tmp.set(
+          p.home[0] + (p.target[0] - p.home[0]) * formed,
+          p.home[1] + (p.target[1] - p.home[1]) * formed,
+          p.home[2] + (p.target[2] - p.home[2]) * formed
+        );
+        p.mesh.position.copy(tmp);
+      }
+
+      group.rotation.y = clock.getElapsedTime() * 0.18 * formed;
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    addEventListener("resize", () => {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+    });
+  </script>
+</body>
+</html>
